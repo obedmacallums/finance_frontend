@@ -28,7 +28,7 @@ export default createStore({
         console.log(payload.password)
         const response = await axios({
           method: 'post',
-          url: 'https://finance.parkingfile.com/api-token-auth',
+          url: 'https://finance.parkingfile.com/api-token-auth/',
           data: {
             username: payload.username,
             password: payload.password
