@@ -21,27 +21,20 @@ export default createStore({
 
   },
   actions: {
-     async login({commit, state}, payload){
-      try{
-        //axios.defaults.headers.common['Access-Control-Allow-Origin'] = '*';
-        console.log(payload.username)
-        console.log(payload.password)
-        const response = await axios({
-          method: 'post',
-          url: 'https://finance.parkingfile.com/api-token-auth/',
-          data: {
-            username: payload.username,
-            password: payload.password
-          },
-         
-        });
-        const data = await response.data;
-        console.log(data)
-
-      }catch (error){
-        console.log(error)
-
-      }
+      login({commit, state}, payload){
+        var url = 'https://finance.parkingfile.com/api-token-auth/';
+        var data = { username: payload.username,
+          password: payload.password};
+        
+        fetch(url, {
+          method: 'POST', // or 'PUT'
+          body: JSON.stringify(data), // data can be `string` or {object}!
+          headers:{
+            'Content-Type': 'application/json'
+          }
+        }).then(res => res.json())
+        .catch(error => console.error('Error:', error))
+        .then(response => console.log('Success:', response));
 
 
     }
