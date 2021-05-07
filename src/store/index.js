@@ -1,4 +1,6 @@
 import { createStore } from 'vuex'
+import axios from 'axios'
+axios.defaults.headers.common['Access-Control-Allow-Origin'] = '*';
 
 export default createStore({
   state: {
@@ -21,7 +23,20 @@ export default createStore({
   actions: {
      async login({commit, state}, payload){
       try{
-        console.log('okok', payload)
+        //axios.defaults.headers.common['Access-Control-Allow-Origin'] = '*';
+        console.log(payload.username)
+        console.log(payload.password)
+        const response = await axios({
+          method: 'post',
+          url: 'https://finance.parkingfile.com/api-token-auth',
+          data: {
+            username: payload.username,
+            password: payload.password
+          },
+         
+        });
+        const data = await response.data;
+        console.log(data)
 
       }catch (error){
         console.log(error)
