@@ -21,21 +21,25 @@ export default createStore({
 
   },
   actions: {
-      login({commit, state}, payload){
-        var url = 'https://finance.parkingfile.com/api-token-auth/';
-        var data = { username: payload.username,
+      async login({commit, state}, payload){
+        const url = 'https://finance.parkingfile.com/api-token-auth/';
+        const data = { username: payload.username,
           password: payload.password};
         
-        fetch(url, {
-          method: 'POST', // or 'PUT'
-          body: JSON.stringify(data), // data can be `string` or {object}!
+         try{ 
+          const res  = await fetch(url, {
+          method: 'POST',
+          body: JSON.stringify(data), 
           headers:{
             'Content-Type': 'application/json'
-          }
-        }).then(res => res.json())
-        .catch(error => console.error('Error:', error))
-        .then(response => console.log('Success:', response));
+          }})
+        
+        const data_json = await res.json()
+        console.log(data_json)
 
+      }catch (error){
+        console.log("errorrr", error)
+      }
 
     }
 
