@@ -1,6 +1,6 @@
 import { createStore } from 'vuex'
-import axios from 'axios'
-axios.defaults.headers.common['Access-Control-Allow-Origin'] = '*';
+
+
 
 export default createStore({
   state: {
