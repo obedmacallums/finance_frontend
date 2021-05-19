@@ -1,63 +1,26 @@
 <template>
 
 <div class="home">
-  <div class="shadow-md m-3 border rounded-lg mb-4 bg-yellow-200 hover:border-2 hover:border-gray-500">
-        
-        <div class="description font-semibold text-2xl text-black p-3">
-            Pastillas Anticonceptivas
-    
-        </div>
-       
-      <div class="flex place-content-between p-3 ">   
-    
-    <div class="item">
-    
-        FAMACIA Y SALUD
-    
-    </div>
-    <div class="amount font-semibold">
-        -15000
-    </div>
-    </div>  
-    </div>
-    <div class="shadow-md m-3 border rounded-lg mb-4 bg-blue-200 hover:border-2 hover:border-gray-500">
-        
-        <div class="description font-semibold text-2xl text-black p-3">
-            Pastillas Anticonceptivas
-    
-        </div>
-       
-      <div class="flex place-content-between p-3 ">   
-    
-    <div class="item">
-    
-        FAMACIA Y SALUD
-    
-    </div>
-    <div class="amount font-semibold">
-        -15000
-    </div>
-    </div>  
-    </div>
-    <div class="shadow-md m-3 border rounded-lg mb-4 bg-red-200 hover:border-2 hover:border-gray-500">
-        
-        <div class="description font-semibold text-2xl text-black p-3">
-            Pastillas Anticonceptivas
-    
-        </div>
-       
-      <div class="flex place-content-between p-3 ">   
-    
-    <div class="item">
-    
-        FAMACIA Y SALUD
-    
-    </div>
-    <div class="amount font-semibold">
-        -15000
-    </div>
-    </div>  
-    </div>
+
+  <Card description="Pastilla anticonceptiva"
+        amount="-15000"
+        item="FARMACIA Y SALUD"
+        color="blue"
+        intensity="100"
+        class="m-3 mb-4"
+  
+  />
+
+  <Card description="Compras en el lider"
+      amount="-32988"
+      item="Spuermercado"
+      color="red"
+      intensity="200"
+      class="m-3 mb-4"
+
+/>
+
+
 </div>
 
 
@@ -68,11 +31,12 @@
 <script>
 // @ is an alias to /src
 import HelloWorld from '@/components/HelloWorld.vue'
+import Card from '@/components/Card.vue'
 
 export default {
   name: 'Home',
   components: {
-    HelloWorld
+    HelloWorld, Card
   }
 }
 </script>
