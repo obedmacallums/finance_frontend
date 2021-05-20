@@ -1,12 +1,13 @@
 import { createStore } from 'vuex'
-
+import router from '../router'
 
 
 export default createStore({
   state: {
     home_list: [],
     token: '',
-    user: null
+    user: null,
+    error: null
 
   },
   mutations: {
@@ -16,6 +17,16 @@ export default createStore({
     },
     setToken(state, payload){
       state.token = payload
+
+    },
+
+    setUser(state, payload){
+      state.user = payload
+
+    },
+
+    setError(state, payload){
+      state.error = payload
 
     },
 
@@ -35,10 +46,25 @@ export default createStore({
           }})
         
         const data_json = await res.json()
-        console.log(data_json)
+        
+        // router.push('/')
+
+        if (data_json.token){
+          
+          commit('setToken', data_json.token)
+          router.push('/')
+          
+        }else{
+          
+          commit('setError', data_json)
+          
+
+        }
+        
 
       }catch (error){
-        console.log("errorrr", error)
+        commit('setError', error)
+        
       }
 
     }

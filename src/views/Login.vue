@@ -1,30 +1,28 @@
 <template>
     <div>
-       <div class="flex flex-col items-center justify-center bg-gray-300 h-screen select-none">
-    <div class="flex flex-col -mt-32 bg-white px-4 sm:px-6 md:px-8 lg:px-10 py-8 rounded-xl shadow-2xl w-full max-w-md  border-l-4 border-purple-600">
-        <div class="font-medium self-center text-xl sm:text-2xl uppercase w-60 text-center bg-purple-600 shadow-2xl p-6 rounded-full text-white">Sign In</div>
-        <div class="mt-10">
-            <form method="POST" action="" autocomplete="">                
+       <div class="flex flex-col items-center justify-center h-screen bg-gray-100 select-none">
+    <div class="flex flex-col w-full max-w-md px-4 py-8 -mt-32 bg-white border-l-4 border-blue-500 shadow-2xl sm:px-6 md:px-8 lg:px-10 rounded-xl">
+       <div class="mt-10">
+            <div>                
                 <div class="relative w-full mb-3">
-                    <input type="email" name="email" class="border-0 p-4 placeholder-gray-400 text-gray-700 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full" placeholder="Email" style="transition: all 0.15s ease 0s;" />
-                    <small class="p-2 text-red-500">* Email</small>
+                    <input type="text" name="username" v-model="username" class="w-full p-4 text-sm text-gray-700 placeholder-gray-400 bg-white border-0 rounded shadow focus:outline-none focus:ring" placeholder="Usuario" style="transition: all 0.15s ease 0s;" />
                 </div>
                 <div class="relative w-full mb-3">
-                    <input type="password" name="password" class="border-0 p-4 placeholder-gray-400 text-gray-700 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full" placeholder="Password" style="transition: all 0.15s ease 0s;" />
-                    <small class="p-2 text-red-500">* Password</small>
+                    <input type="password" v-model="password" name="password" class="w-full p-4 text-sm text-gray-700 placeholder-gray-400 bg-white border-0 rounded shadow focus:outline-none focus:ring" placeholder="Clave" style="transition: all 0.15s ease 0s;" />
+                    <small class="p-2 text-red-500">{{error}}</small>
                 </div>
-                <div class="text-center mt-6">
-                    <input type="submit" name="signin" id="signin" value="Sign In" class="p-3 rounded-lg bg-purple-600 outline-none text-white shadow w-32 justify-center focus:bg-purple-700 hover:bg-purple-500">
+                <div class="mt-6 text-center">
+                    <input type="submit" value="Iniciar" name="signin" id="signin" @click="login" class="justify-center w-32 p-3 text-white bg-blue-500 border rounded-lg shadow outline-none focus:bg-blue-500 hover:text-blue-500 hover:border-blue-500 hover:border hover:bg-white focus:text-white"/>
                 </div>  
                 <div class="flex flex-wrap mt-6">
                     <div class="w-1/2 text-left">
-                        <a href="#" class="text-blue-900 text-xl"><small>Forgot password?</small></a>
+                        <a href="#" class="text-xl text-black hover:text-blue-700"><small>Olvidaste tu clave?</small></a>
                     </div>
                     <div class="w-1/2 text-right">
-                        <a href="#" class="text-blue-900 text-xl"><small>Sign In</small></a>
+                        <a href="#" class="text-xl text-black hover:text-blue-700"><small>Registrate</small></a>
                     </div>
                 </div>
-            </form>
+            </div>
         </div>
     </div>
 </div>
@@ -32,18 +30,7 @@
 
     </div>
 
-   <!-- <h1>Login</h1> <br><br>
-        <label for="username">Usuario</label>
-        <input type="text" id="username" name="username" v-model="username"><br><br>
-        <label for="password">Clave</label>
-        <input type="password" id="password" name="password" v-model="password"><br><br>
-        <input type="submit" @click="login" value="Iniciar Sesion">
-
-        {{username}}
-        {{password}} -->
-
-
-        
+     
 
 
 </template>
@@ -51,7 +38,7 @@
 <script>
 // @ is an alias to /src
 import HelloWorld from '@/components/HelloWorld.vue'
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 import {useStore} from 'vuex'
 
 
@@ -65,9 +52,10 @@ export default {
     const store = useStore()
     const password = ref('')
     const username = ref('')
+    const error = computed(() => store.state.error)
     const login = ()=> store.dispatch('login', {"username": username.value, "password": password.value})
     
-    return {password, username, login}
+    return {password, username, login, error}
 
   }
 }
