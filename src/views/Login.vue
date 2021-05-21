@@ -52,6 +52,7 @@ export default {
     const store = useStore()
     const password = ref('')
     const username = ref('')
+    store.commit('setError', null)
     const error = computed(() => store.state.error)
     const login = ()=> store.dispatch('login', {"username": username.value, "password": password.value})
     

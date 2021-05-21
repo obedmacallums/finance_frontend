@@ -1,4 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
+import store from '../store'
 
 const routes = [
   {
@@ -7,7 +8,8 @@ const routes = [
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/Home.vue')
+    component: () => import(/* webpackChunkName: "about" */ '../views/Home.vue'),
+    meta: {requiresAuth: true}
   },
   {
     path: '/login',
@@ -16,9 +18,7 @@ const routes = [
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
     component: () => import(/* webpackChunkName: "about" */ '../views/Login.vue'),
-    meta: {
-      hideNavbar: true,
-     }
+    meta: {hideNavbar: true}
   },
   {
     path: '/add',
@@ -26,7 +26,8 @@ const routes = [
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/Add.vue')
+    component: () => import(/* webpackChunkName: "about" */ '../views/Add.vue'),
+    meta: {requiresAuth: true}
   },
   {
     path: '/items',
@@ -34,7 +35,8 @@ const routes = [
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/Items.vue')
+    component: () => import(/* webpackChunkName: "about" */ '../views/Items.vue'),
+    meta: {requiresAuth: true}
   }
 
 
@@ -43,6 +45,26 @@ const routes = [
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
   routes
+})
+
+
+router.beforeEach((to, from, next) => {
+  const token = store.state.token
+
+  
+  
+
+  if (to.matched.some(record => record.meta.requiresAuth)) {
+    // this route requires auth, check if logged in
+    // if not, redirect to login page.
+    if (token) {
+      next()
+    } else {
+      next({name:'Login'})
+    }
+  } else {
+    next() // make sure to always call next()!
+  }
 })
 
 export default router

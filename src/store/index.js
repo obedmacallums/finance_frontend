@@ -1,11 +1,17 @@
 import { createStore } from 'vuex'
 import router from '../router'
+import createPersistedState from "vuex-persistedstate";
+import axios from 'axios';
+
+const persist = createPersistedState({
+  paths: ['token', 'user']
+})
 
 
 export default createStore({
   state: {
     home_list: [],
-    token: '',
+    token: null,
     user: null,
     error: null
 
@@ -32,44 +38,59 @@ export default createStore({
 
   },
   actions: {
-      async login({commit, state}, payload){
-        const url = 'https://finance.parkingfile.com/api-token-auth/';
-        const data = { username: payload.username,
-          password: payload.password};
+      async login({commit}, payload){
+        // const url = 'https://finance.parkingfile.com/api-token-auth/';
+        // const data = { username: payload.username,
+        //   password: payload.password};
+        //  try{ 
+        //   const res  = await fetch(url, {
+        //   method: 'POST',
+        //   body: JSON.stringify(data), 
+        //   headers:{
+        //     'Content-Type': 'application/json'
+        //   }})
+        // const data_json = await res.json()
         
-         try{ 
-          const res  = await fetch(url, {
-          method: 'POST',
-          body: JSON.stringify(data), 
-          headers:{
-            'Content-Type': 'application/json'
-          }})
-        
-        const data_json = await res.json()
-        
-        // router.push('/')
-
-        if (data_json.token){
+        const url = 'https://finance.parkingfile.com/api-token-auth/'
+        const data = { username: payload.username, password: payload.password}
+        try{
+            const res = await axios.post(url, data)
+            
+            if (res.data.token){
           
-          commit('setToken', data_json.token)
-          router.push('/')
+              commit('setToken', res.data.token)
+              router.push('/')
+              
+            }
+        }
+        catch(error){
           
-        }else{
-          
-          commit('setError', data_json)
-          
+          commit('setError', error.response.data)
 
         }
+       },
         
 
-      }catch (error){
-        commit('setError', error)
-        
+    async getHomeList({commit, state}) {
+      const url = 'https://finance.parkingfile.com/api/v1/';
+      try{
+        const res  = await axios.get(url, {headers: {Authorization: 'Token ' + state.token}})
+        commit('setHome_list', res.data)
       }
+      catch(error){
+        console.log(error.response.data)
+      }
+      },
+
+    logout ({commit}){
+      commit('setToken', null)
 
     }
 
   },
   modules: {
-  }
+
+  },
+
+  plugins: [persist]
 })

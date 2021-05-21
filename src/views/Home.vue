@@ -1,24 +1,24 @@
 <template>
 
-<div class="home">
+<div v-for="(register, index) in home_list" :key="index" class="home">
 
-  <Card description="Pastilla anticonceptiva"
-        amount="-15000"
-        item="FARMACIA Y SALUD"
-        color="blue"
-        intensity="100"
+  <Card :description="register.description" 
+        :amount="register.amount"
+        :item="register.item__name"
         class="m-3 mb-4"
   
   />
 
-  <Card description="Compras en el lider"
+  <!-- <Card description="Compras en el lider"
       amount="-32988"
       item="Spuermercado"
       color="red"
       intensity="200"
       class="m-3 mb-4"
 
-/>
+/> -->
+
+
 
 
 </div>
@@ -29,14 +29,28 @@
 </template>
 
 <script>
-// @ is an alias to /src
-import HelloWorld from '@/components/HelloWorld.vue'
+
 import Card from '@/components/Card.vue'
+import { computed } from 'vue'
+import {useStore} from 'vuex'
 
 export default {
   name: 'Home',
   components: {
-    HelloWorld, Card
+     Card
+  },
+
+  setup(){
+    const store = useStore()
+    const getHomeList = ()=> store.dispatch('getHomeList')
+    getHomeList()
+
+    const home_list = computed(() => store.state.home_list)
+    
+
+    return {home_list}
+
+
   }
 }
 </script>
