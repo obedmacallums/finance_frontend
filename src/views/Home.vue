@@ -5,6 +5,8 @@
   <Card :description="register.description" 
         :amount="register.amount"
         :item="register.item__name"
+        :color="register.item__color"
+        :intensity="register.item__color_intensity"
         class="m-3 mb-4"
   
   />

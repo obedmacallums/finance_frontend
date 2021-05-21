@@ -8,7 +8,7 @@
        
       <div class="flex p-3 place-content-between ">   
     
-        <div class="item">
+        <div class="text-xs item">
             {{item}}
         </div>
         <div class="font-semibold amount">
@@ -29,7 +29,12 @@ export default {
 
     setup(props) {
 
-        const description = props.description
+        const description = computed(()=>{
+            const lower = props.description.toLowerCase()
+            return lower[0].toUpperCase() + lower.slice(1)
+
+        })
+                
         const amount = props.amount
         const item = props.item
         const color = props.color
@@ -46,6 +51,7 @@ export default {
             }
         })
         
+
         return {description,amount, item, class_bg, class_default_bg}
         
     },
