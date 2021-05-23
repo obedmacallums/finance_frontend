@@ -35,7 +35,7 @@ export default {
   },
   setup(props){
     const color_intensity = '100'
-    const colors = ["red", "blue", "pink", "gray", "green", "purple", "yellow"];
+    const colors = ["red", "blue", "pink", "gray", "green", "purple", "yellow", "indigo"];
     const random = Math.floor(Math.random() * colors.length);
     const class_bg = computed(()=> `bg-${colors[random]}-${color_intensity}`)
     const store = useStore()
