@@ -12,7 +12,6 @@
     
         </div>
         </router-link>
-
   </div>
     
     <div class="text-gray-400">
@@ -25,25 +24,18 @@
               </svg>
     
         </div>
-
         </router-link>
-
   </div>
-
   <div class="text-gray-400">
     <router-link to="/add">
   
     <div class="flex items-center w-5 h-5 hover:text-white hover:border-white">
-
         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="w-full h-full" viewBox="0 0 16 16">
             <path d="M8 0a1 1 0 0 1 1 1v6h6a1 1 0 1 1 0 2H9v6a1 1 0 1 1-2 0V9H1a1 1 0 0 1 0-2h6V1a1 1 0 0 1 1-1z"/>
           </svg>
-
     </div>
     </router-link>
-
 </div>
-
 <div @click="menu_status()">
         <div class="w-12 h-12">
         <div id='boton' class="flex items-center px-2 py-1 text-gray-400 border border-gray-600 rounded hover:text-white hover:border-white">
@@ -55,12 +47,10 @@
         </div>
   
     </div>
-
   
   
     <div id='menu' class="flex-grow hidden w-full" >
       
-
                 <a href="#" class="block mt-3 font-sans text-gray-400 text-md hover:text-white">
             
              <i><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="inline" viewBox="0 0 16 16">
@@ -104,32 +94,23 @@
     </div>
     
   </div>  
-
-
 </template>
-
 <script>
 // @ is an alias to /src
 import HelloWorld from '@/components/HelloWorld.vue'
 import { ref } from 'vue'
 import {useStore} from 'vuex'
-
-
 export default {
   name: 'Navbar',
   components: {
     HelloWorld
   },
-
   setup(){
     const store = useStore()
     const password = ref('')
     const username = ref('')
-
     const logout = ()=> store.dispatch('logout')
     
-
-
     const menu_status = () => {
     const menu = document.querySelector('#menu');
         menu.classList.toggle('hidden') 
@@ -137,17 +118,11 @@ export default {
 }
     
     return {password, username, menu_status, logout}
-
   }
 }
 </script>
-
 <style>
-
-
 .router-link-active{
   color:white;
 }
-
-
 </style>

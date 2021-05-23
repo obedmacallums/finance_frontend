@@ -1,6 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import store from '../store'
-
 const routes = [
   {
     path: '/',
@@ -38,22 +37,15 @@ const routes = [
     component: () => import(/* webpackChunkName: "about" */ '../views/Items.vue'),
     meta: {requiresAuth: true}
   }
-
-
 ]
-
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
   routes
 })
-
-
 router.beforeEach((to, from, next) => {
   const token = store.state.token
-
   
   
-
   if (to.matched.some(record => record.meta.requiresAuth)) {
     // this route requires auth, check if logged in
     // if not, redirect to login page.
@@ -66,5 +58,4 @@ router.beforeEach((to, from, next) => {
     next() // make sure to always call next()!
   }
 })
-
 export default router

@@ -1,7 +1,10 @@
 <template>
     <div>
        <div class="flex flex-col items-center justify-center h-screen bg-gray-100 select-none">
-    <div class="flex flex-col w-full max-w-md px-4 py-8 -mt-32 bg-white border-l-4 border-blue-500 shadow-2xl sm:px-6 md:px-8 lg:px-10 rounded-xl">
+    <div class="flex flex-col w-full max-w-md px-4 py-8 -mt-32 bg-white shadow-2xl sm:px-6 md:px-8 lg:px-10 rounded-xl">
+        <div class="w-12 h-12 text-center text-blue-500">
+        <LoginAnimate/>
+        </div>
        <div class="mt-10">
             <form @submit.prevent="login"> 
                 <div class="relative w-full mb-3">
@@ -26,28 +29,20 @@
         </div>
     </div>
 </div>
-
-
     </div>
-
      
-
-
 </template>
-
 <script>
 // @ is an alias to /src
 import HelloWorld from '@/components/HelloWorld.vue'
+import LoginAnimate from '@/components/LoginAnimate.vue'
 import { ref, computed } from 'vue'
 import {useStore} from 'vuex'
-
-
 export default {
   name: 'Login',
   components: {
-    HelloWorld
+    HelloWorld, LoginAnimate
   },
-
   setup(){
     const store = useStore()
     const password = ref('')
@@ -57,7 +52,6 @@ export default {
     const login = ()=> store.dispatch('login', {"username": username.value, "password": password.value})
     
     return {password, username, login, error}
-
   }
 }
 </script>
