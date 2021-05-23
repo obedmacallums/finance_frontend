@@ -1,7 +1,7 @@
 <template>
 
   
-  <Navbar v-if="!$route.meta.hideNavbar" />
+  <Navbar v-if="!$route.meta.hideNavbar" class='sticky top-0' />
   <router-view/>
 </template>
 
