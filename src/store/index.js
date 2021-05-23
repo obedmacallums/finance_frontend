@@ -87,6 +87,20 @@ export default createStore({
       
     }
   },
+  getters: {
+    total_items: state => {
+      let total = 0
+      state.item_list.map(item => total = total + item.balance)
+      return total
+    },
+    items_select: state => {
+      let items = []
+      state.item_list.map(item => items.push(item.name))
+      return items
+    }
+  
+  },
+
   modules: {
   },
   plugins: [persist]

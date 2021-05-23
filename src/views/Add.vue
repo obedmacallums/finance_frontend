@@ -11,10 +11,8 @@
             <label for="item" class="font-sans text-lg font-bold">Item</label>
             
             <select id="item" class="w-full h-full border border-gray-400 rounded-lg shadow-md focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent">
-            <option value="volvo">Volvo</option>
-            <option value="saab">Saab</option>
-            <option value="mercedes">Mercedes</option>
-            <option value="audi">Audi</option>
+            <option value="-------">-------</option>
+            <option v-for="(item, index) in items_select" :key="index" value="item">{{item}}</option>
             </select>
             </div>
 
@@ -48,8 +46,9 @@
 <script>
 
 import Datepicker from 'vue3-datepicker'
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 import { es } from 'date-fns/locale'
+import {useStore} from 'vuex'
 
 export default {
   name: 'Add',
@@ -57,10 +56,17 @@ export default {
     Datepicker
   },
     setup(props){
+        const store = useStore()
+        const getItemList = ()=> store.dispatch('getItemList')
+        if (!store.state.item_list.length){
+            getItemList()
+        }
+
         const picked = ref(new Date())
         const locale = ref(es)
         const format = ref('dd-MM-yyyy')
-        return{picked, locale, format}
+        const items_select = computed(() => store.getters.items_select)
+        return{picked, locale, format, items_select}
 
     }
 
