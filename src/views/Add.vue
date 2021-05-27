@@ -24,8 +24,14 @@
 
         <div class="flex flex-col h-20 m-4">
             <label for="date" class="font-sans text-lg font-bold">Fecha</label>
-            <datepicker v-model="picked" :inputFormat="format" :locale="locale" class="w-full h-12 border border-gray-400 rounded-lg shadow-md focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent" />
+            <div v-if="ok" class="">
+                <v-date-picker v-model="date" mode="date" @dayclick='dayClicked' is-expanded/>
+            </div>
             
+            <input type="text" @click="ok=true" :value="day" v-if="!ok" class="w-full h-full">
+            
+
+
             
             </div>
 
@@ -45,15 +51,15 @@
 
 <script>
 
-import Datepicker from 'vue3-datepicker'
+
 import { ref, computed } from 'vue'
-import { es } from 'date-fns/locale'
+import { Calendar, DatePicker } from 'v-calendar';
 import {useStore} from 'vuex'
 
 export default {
   name: 'Add',
-  components: {
-    Datepicker
+  components: {DatePicker,Calendar
+    
   },
     setup(props){
         const store = useStore()
@@ -62,13 +68,30 @@ export default {
             getItemList()
         }
 
-        const picked = ref(new Date())
-        const locale = ref(es)
-        const format = ref('dd-MM-yyyy')
+        
         const items_select = computed(() => store.getters.items_select)
-        return{picked, locale, format, items_select}
+        
+        return{ items_select}
 
-    }
+    },
+    data(){
+
+        return {date: new Date(),
+                ok: false,
+                
+        }
+    },
+    computed: {
+                day: function(){
+                    return this.date.getDate() + "-"+ (this.date.getMonth()+1) + "-" + this.date.getFullYear();
+                }
+            },
+    methods: {
+    dayClicked(day) {
+      this.selectedDay = day;
+      this.ok = false
+    },
+  },
 
 }
 </script>
