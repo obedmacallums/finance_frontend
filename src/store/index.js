@@ -75,6 +75,24 @@ export default createStore({
     logout ({commit}){
       commit('setToken', null)
     },
+
+    async addRegister({commit, state}, payload){
+      const url = 'https://finance.parkingfile.com/api/v1/register/create/';
+      const data = { description: payload.description, amount: payload.amount, 
+        item:payload.item, date:payload.date}
+
+        try{
+          const res  = await axios.post(url, data, {headers: {Authorization: 'Token ' + state.token}})
+          // commit('setItem_list', res.data)
+          console.log(res.data)
+        }catch(error){
+          console.log(error.response.data)
+        }
+      
+
+
+    },
+
     async getItemList ({commit, state}){
       const url = 'https://finance.parkingfile.com/api/v1/items';
       try{
@@ -95,7 +113,7 @@ export default createStore({
     },
     items_select: state => {
       let items = []
-      state.item_list.map(item => items.push(item.name))
+      state.item_list.map(item => items.push({name:item.name, id:item.id}))
       return items
     }
   
