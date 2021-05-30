@@ -1,6 +1,6 @@
 <template>
 
-<div v-for="(register, index) in home_list" :key="index" class="home">
+<div v-for="register in home_list" :key="register.updated" class="home">
 
   <Card :description="register.description" 
         :amount="register.amount"
@@ -33,7 +33,7 @@
 <script>
 
 import Card from '@/components/Card.vue'
-import { computed } from 'vue'
+import { computed, watchEffect} from 'vue'
 import {useStore} from 'vuex'
 
 export default {
@@ -44,11 +44,11 @@ export default {
 
   setup(){
     const store = useStore()
+    
+    
+    const home_list = computed(() => store.getters.ordered_home_list)
     const getHomeList = ()=> store.dispatch('getHomeList')
     getHomeList()
-
-    const home_list = computed(() => store.state.home_list)
-    
 
     return {home_list}
 

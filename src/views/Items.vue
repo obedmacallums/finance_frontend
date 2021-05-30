@@ -16,7 +16,8 @@
     </div>
     
   <div class="grid flex-wrap grid-cols-2 gap-4 m-3 mb-4 items" >
-    <div  v-for="(item, index) in item_list" :key="index">
+    <div  v-for="item in item_list" :key="item.updated">
+      
     <Item :name="item.name" :amount="item.balance" :intensity="item.color_intensity" :color="item.color" class="h-full"/>
     </div>
     

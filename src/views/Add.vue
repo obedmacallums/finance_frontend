@@ -24,8 +24,9 @@
 
         <div class="flex flex-col h-20 m-4">
             <label for="date" class="font-sans text-lg font-bold">Fecha</label>
-            <div v-if="ok" class="">
-                <v-date-picker v-model="date" mode="date" @dayclick='dayClicked' is-expanded/>
+            <div v-if="ok" class="pb-1 mb-1">
+                <v-date-picker v-model="date" mode="date" @dayclick='dayClicked' is-expanded is-required/>
+                
             </div>
             
             <input type="text" @click="ok=true" :value="day1" v-if="!ok" class="w-full h-full">
@@ -62,13 +63,36 @@ export default {
   components: {DatePicker,Calendar},
 
     setup(props){
+        const date = ref(new Date())
+        
+
+        const dayClicked =(day)=> {
+        
+        
+        
+        selectedDay.value = day;
+        ok.value = false
+        
+
+
+        
+    }
+        
         const store = useStore()
+        const getItemList = ()=> store.dispatch('getItemList')
+        if (!store.state.item_list.length){
+            getItemList()
+        }
+        const selectedDay = ref(null)
         const ok = ref(false)
         const description = ref('')
         const amount = ref('')
         const item = ref('')
-        const date = ref(new Date())
+        
+
         const formatDate = (d)=>{
+
+     
     
         let month = '' + (d.getMonth() + 1);
         let day = '' + d.getDate();
@@ -79,12 +103,14 @@ export default {
         if (day.length < 2) 
             day = '0' + day;
 
-    return [year, month, day].join('-');
-}
+        return [year, month, day].join('-')
+        }
+
+
 
 
         const day1 = computed(() => formatDate(date.value))
-        const getItemList = ()=> store.dispatch('getItemList')
+        
         const addRegister = ()=> {
 
             let payload = {"description": description.value, "amount": amount.value,
@@ -99,24 +125,14 @@ export default {
 
 
 
-        if (!store.state.item_list.length){
-            getItemList()
-        }
 
         
         const items_select = computed(() => store.getters.items_select)
         
-        return{ items_select, day1, description, amount, item, date, ok, addRegister}
+        return{ items_select, day1, description, amount, item, date, ok, addRegister, selectedDay, dayClicked}
 
-    },
     
-    methods: {
-    dayClicked(day) {
-        console.log(day)
-        this.selectedDay = day;
-        this.ok = false
-        
-    },
+    
     
   },
 

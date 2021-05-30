@@ -3,7 +3,7 @@ import router from '../router'
 import createPersistedState from "vuex-persistedstate";
 import axios from 'axios';
 const persist = createPersistedState({
-  paths: ['token', 'user']
+  paths: ['token', 'user', 'home_list', 'item_list']
 })
 export default createStore({
   state: {
@@ -66,6 +66,7 @@ export default createStore({
       const url = 'https://finance.parkingfile.com/api/v1/';
       try{
         const res  = await axios.get(url, {headers: {Authorization: 'Token ' + state.token}})
+        console.log(res.data)
         commit('setHome_list', res.data)
       }
       catch(error){
@@ -83,14 +84,22 @@ export default createStore({
 
         try{
           const res  = await axios.post(url, data, {headers: {Authorization: 'Token ' + state.token}})
-          // commit('setItem_list', res.data)
-          console.log(res.data)
+
+          const added = {amount: res.data.amount,
+          date: res.data.date,
+          description: res.data.description,
+          id: res.data.id,
+          item__color: "blue",
+          item__color_intensity: "500",
+          item__name: "NUEVO",
+          updated: 1
+          }
+
+          state.home_list.push(added)
+          router.push('/')
         }catch(error){
           console.log(error.response.data)
         }
-      
-
-
     },
 
     async getItemList ({commit, state}){
@@ -115,7 +124,8 @@ export default createStore({
       let items = []
       state.item_list.map(item => items.push({name:item.name, id:item.id}))
       return items
-    }
+    },
+    ordered_home_list: state => state.home_list.sort((a,b)=>b.id-a.id)
   
   },
 
