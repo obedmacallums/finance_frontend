@@ -10,7 +10,7 @@
         :color="register.item__color"
         :intensity="register.item__color_intensity"
         
-        @touchstart="selected(register)"
+        @click="selected(register)"
         class="m-3 mb-4"/>
 
 </div>
