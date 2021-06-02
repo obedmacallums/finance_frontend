@@ -8,6 +8,7 @@
     "deploy": "push-dir --dir=dist --branch=gh-pages --cleanup"
   },
   "dependencies": {
+    "@headlessui/vue": "^1.2.0",
     "@popperjs/core": "^2.9.2",
     "@tailwindcss/postcss7-compat": "^2.0.2",
     "autoprefixer": "^9",

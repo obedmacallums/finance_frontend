@@ -11,7 +11,8 @@ export default createStore({
     item_list:[],
     token: null,
     user: null,
-    error: null
+    error: null,
+    register_selected:null
   },
   mutations: {
     setHome_list(state, payload){
@@ -28,6 +29,9 @@ export default createStore({
     },
     setError(state, payload){
       state.error = payload
+    },
+    setRegister_selected(state, payload){
+      state.register_selected = payload
     },
   },
   actions: {
@@ -112,7 +116,30 @@ export default createStore({
         console.log(error.response.data)
       }
       
+    },
+    async deleteRegister ({commit, state}, id){
+      const url = `https://finance.parkingfile.com/api/v1/register/${id}`;
+      
+      try{
+        const list_new = state.home_list.filter(item => item.id !== id)
+        
+        commit('setHome_list', list_new)
+        commit('setRegister_selected', null)
+
+        const res  = await axios.delete(url, {headers: {Authorization: 'Token ' + state.token}})
+        
+        console.log(res)
+
+        
+
+
+        
+      }catch(error){
+        console.log(error.response)
+      }
+      
     }
+
   },
   getters: {
     total_items: state => {
