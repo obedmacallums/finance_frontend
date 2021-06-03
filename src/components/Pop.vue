@@ -32,19 +32,21 @@
             <div
               class="inline-block w-full max-w-md p-6 my-8 overflow-hidden text-left align-middle transition-all transform bg-white shadow-xl rounded-2xl"
             >
+            <div v-if="confirmation">
               <DialogTitle
                 as="h3"
                 class="text-lg font-medium leading-6 text-gray-900"
               >
-                {{amount}}
+                ¿Estas seguro que deseas borrar este registro?
               </DialogTitle>
               <div class="mt-2">
                 <p class="text-sm text-gray-500">
-                  {{description}}
+                  {{description}} <br>
+                  {{amount}}
                 </p>
               </div>
 
-              <div class="mt-4">
+              <div class="mt-4 space-x-3">
                 <button
                   type="button"
                   class="inline-flex justify-center px-4 py-2 text-sm font-medium text-blue-900 bg-blue-100 border border-transparent rounded-md hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-blue-500"
@@ -52,6 +54,49 @@
                 >
                   Borrar
                 </button>
+                  <button
+                  type="button"
+                  class="inline-flex justify-center px-4 py-2 text-sm font-medium text-blue-900 bg-blue-100 border border-transparent rounded-md hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-blue-500"
+                  @click="closeModal2"
+                >
+                  Cancelar
+                </button>
+
+              </div>
+              </div>
+              <div v-if="!confirmation">
+              <DialogTitle
+                as="h3"
+                class="text-lg font-medium leading-6 text-gray-900"
+              >
+                {{description}}
+              </DialogTitle>
+              <DialogTitle
+                as="h3"
+                class="text-lg mt-2 font-medium leading-6 text-gray-500"
+              >
+                {{amount}}
+              </DialogTitle>
+
+
+              <div class="mt-4 space-x-3">
+                <button
+                  type="button"
+                  class="inline-flex justify-center px-4 py-2 text-sm font-medium text-blue-900 bg-blue-100 border border-transparent rounded-md hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-blue-500"
+                  @click="confirmation=true"
+                >
+                  Borrar
+                </button>
+
+                <button
+                  type="button"
+                  class="inline-flex justify-center px-4 py-2 text-sm font-medium text-blue-900 bg-blue-100 border border-transparent rounded-md hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-blue-500"
+                  
+                >
+                  Editar
+                </button>
+
+              </div>
               </div>
             </div>
           </TransitionChild>
@@ -90,7 +135,7 @@ export default {
         const register_selected = computed(() =>store.state.register_selected)
 
         let isOpen = ref(true);
-
+        let confirmation = ref(false);
         const closeModal = ()=> {
         store.dispatch('deleteRegister', props.id)
         isOpen.value = false
@@ -102,7 +147,7 @@ export default {
         }
         const openModal = ()=> isOpen.value = true
 
-        return { isOpen, closeModal, register_selected, openModal, closeModal2}
+        return { isOpen, closeModal, register_selected, openModal, closeModal2, confirmation}
         
     },
 }
